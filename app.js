@@ -68,9 +68,9 @@ const getDashboardData = async (endpoint, query) => {
         const data = await Promise.all([destination, weather, airport])
 
         console.log(
-            `${data[0] !== null ? `${data[0] ? `${data[0].name} is in ${data[0].country}.\n` : ''}` : null}` +
-            `${data[1] !== null ? `${data[1] ? `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` : ''}` : null}` +
-            `${data[2] !== null ? `${data[2] ? `The main airport is ${data[2].name}.\n` : ''}` : null}`
+            `${data[0] !== null ? `${data[0].name && data[0].country ? `${data[0].name} is in ${data[0].country}.\n` : ''}` : null}` +
+            `${data[1] !== null ? `${data[1].temperature && data[1].weather_description ? `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` : ''}` : null}` +
+            `${data[2] !== null ? `${data[2].name ? `The main airport is ${data[2].name}.\n` : ''}` : null}`
         );
 
         // console.log(data)
