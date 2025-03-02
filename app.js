@@ -61,19 +61,19 @@ const getDashboardData = async (endpoint, query) => {
 (async () => {
     try {
 
-        const destination = getDashboardData('destinations', 'london');
-        const weather = getDashboardData('weathers', 'london');
-        const airport = getDashboardData('airports', 'london');
+        const destination = getDashboardData('destinations', 'vienna');
+        const weather = getDashboardData('weathers', 'vienna');
+        const airport = getDashboardData('airports', 'vienna');
 
         const data = await Promise.all([destination, weather, airport])
 
         console.log(
-            `${data[0].name} is in ${data[0].country}.\n` +
-            `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` +
-            `The main airport is ${data[2].name}.\n`
+            `${data[0] !== null ? `${data[0] ? `${data[0].name} is in ${data[0].country}.\n` : ''}` : null}` +
+            `${data[1] !== null ? `${data[1] ? `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` : ''}` : null}` +
+            `${data[2] !== null ? `${data[2] ? `The main airport is ${data[2].name}.\n` : ''}` : null}`
         );
 
-        console.log(data)
+        // console.log(data)
     } catch (err) {
         console.error(err)
     }
