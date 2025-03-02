@@ -30,6 +30,17 @@
     - Restituire una Promise che risolve un oggetto contenente i dati aggregati.
     - Stampare i dati in console in un messaggio ben formattato.
     - Testa la funzione con la query "london"
+
+    🎯 Bonus 1 - Risultato vuoto
+    Se l’array di ricerca è vuoto, invece di far fallire l'intera funzione, semplicemente i dati relativi a quella chiamata verranno settati a null e  la frase relativa non viene stampata. Testa la funzione con la query “vienna” (non trova il meteo).
+
+    🎯 Bonus 2 - Chiamate fallite
+    Attualmente, se una delle chiamate fallisce, **Promise.all()** rigetta l'intera operazione.
+
+    Modifica `getDashboardData()` per usare **Promise.allSettled()**, in modo che:
+    Se una chiamata fallisce, i dati relativi a quella chiamata verranno settati a null.
+    Stampa in console un messaggio di errore per ogni richiesta fallita.
+    Testa la funzione con un link fittizio per il meteo (es. https://www.meteofittizio.it).
  */
 
 const fetchURL = async (url) => {
@@ -51,7 +62,8 @@ const getDashboardData = async (endpoint, query) => {
         result = result[0]
 
     } catch (err) {
-        console.error(err)
+        // console.error(err)
+        throw new Error(`Error to url with params ${endpoint}`)
     }
 
 
@@ -68,9 +80,9 @@ const getDashboardData = async (endpoint, query) => {
         const data = await Promise.all([destination, weather, airport])
 
         console.log(
-            `${data[0] !== null ? `${data[0].name && data[0].country ? `${data[0].name} is in ${data[0].country}.\n` : ''}` : null}` +
-            `${data[1] !== null ? `${data[1].temperature && data[1].weather_description ? `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` : ''}` : null}` +
-            `${data[2] !== null ? `${data[2].name ? `The main airport is ${data[2].name}.\n` : ''}` : null}`
+            `${data[0] !== null ? `${data[0] && data[0].name && data[0].country ? `${data[0].name} is in ${data[0].country}.\n` : ''}` : null}` +
+            `${data[1] !== null ? `${data[1] && data[1].temperature && data[1].weather_description ? `Today there are ${data[1].temperature} degrees and the weather is ${data[1].weather_description}.\n` : ''}` : null}` +
+            `${data[2] !== null ? `${data[2] && data[2].name ? `The main airport is ${data[2].name}.\n` : ''}` : null}`
         );
 
         // console.log(data)
